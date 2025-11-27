@@ -326,3 +326,175 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize the application
     initApp();
 });
+
+// Functions for Parts Management page
+var isAddingPoints = false;
+var measurements = [];
+var currentId = 1;
+
+function startAddingPoints() {
+    isAddingPoints = !isAddingPoints;
+    
+    if (isAddingPoints) {
+        document.querySelector('button[onclick="startAddingPoints()"]').textContent = 'Nokta Ekleme Modu (İptal)';
+        document.querySelector('button[onclick="startAddingPoints()"]').classList.add('btn-warning');
+        document.querySelector('button[onclick="startAddingPoints()"]').classList.remove('btn-primary');
+        alert('Ölçüm noktası eklemek için resme tıklayın');
+    } else {
+        document.querySelector('button[onclick="startAddingPoints()"]').textContent = 'Nokta Ekleme Modu';
+        document.querySelector('button[onclick="startAddingPoints()"]').classList.add('btn-primary');
+        document.querySelector('button[onclick="startAddingPoints()"]').classList.remove('btn-warning');
+    }
+}
+
+function addPointToImage(x, y, value, description, id) {
+    const container = document.getElementById('imageContainer');
+    const pointId = id || currentId;
+    
+    // Create measurement point element
+    const point = document.createElement('div');
+    point.className = 'measurement-point';
+    point.style.left = `${x}px`;
+    point.style.top = `${y}px`;
+    point.dataset.id = pointId;
+    
+    // Add click event to edit the point
+    point.addEventListener('click', function(e) {
+        e.stopPropagation();
+        editPoint(pointId);
+    });
+    
+    container.appendChild(point);
+    
+    // Store in measurements array
+    const measurement = {
+        id: pointId,
+        x: x,
+        y: y,
+        value: value || '',
+        description: description || ''
+    };
+    
+    // If this is a new point, add it to the array, otherwise update existing
+    const existingIndex = measurements.findIndex(m => m.id === pointId);
+    if (existingIndex >= 0) {
+        measurements[existingIndex] = measurement;
+    } else {
+        measurements.push(measurement);
+    }
+    
+    if (!id) currentId++; // Only increment if this is a new point
+    
+    updateMeasurementsList();
+}
+
+function handleImageClick(event) {
+    if (!isAddingPoints) return;
+    
+    const container = document.getElementById('imageContainer');
+    const rect = container.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    
+    const value = document.getElementById('measurementValue').value;
+    const description = document.getElementById('measurementDescription').value;
+    
+    addPointToImage(x, y, value, description);
+    
+    // Reset input fields
+    document.getElementById('measurementValue').value = '';
+    document.getElementById('measurementDescription').value = '';
+    
+    // Exit point adding mode
+    isAddingPoints = false;
+    document.querySelector('button[onclick="startAddingPoints()"]').textContent = 'Nokta Ekleme Modu';
+    document.querySelector('button[onclick="startAddingPoints()"]').classList.add('btn-primary');
+    document.querySelector('button[onclick="startAddingPoints()"]').classList.remove('btn-warning');
+}
+
+function editPoint(id) {
+    const measurement = measurements.find(m => m.id === id);
+    if (!measurement) return;
+    
+    // Show a prompt to edit the measurement
+    const newValue = prompt('Ölçüm değerini girin:', measurement.value);
+    if (newValue !== null) {
+        measurement.value = newValue;
+        
+        const newDescription = prompt('Açıklama girin:', measurement.description);
+        if (newDescription !== null) {
+            measurement.description = newDescription;
+        }
+        
+        updateMeasurementsList();
+    }
+}
+
+function updateMeasurementsList() {
+    const listContainer = document.getElementById('currentMeasurements');
+    listContainer.innerHTML = '<h6>Eklenen Noktalar:</h6>';
+    
+    if (measurements.length === 0) {
+        listContainer.innerHTML += '<p class="text-muted">Henüz nokta eklenmedi.</p>';
+        return;
+    }
+    
+    measurements.forEach(m => {
+        const item = document.createElement('div');
+        item.className = 'alert alert-light';
+        item.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>Nokta ${m.id}</strong><br>
+                    <small>Konum: (${Math.round(m.x)}, ${Math.round(m.y)})</small><br>
+                    <small>Değer: ${m.value || 'Belirtilmemiş'}</small><br>
+                    <small>Açıklama: ${m.description || 'Açıklama yok'}</small>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removePoint(${m.id})">Sil</button>
+            </div>
+        `;
+        listContainer.appendChild(item);
+    });
+}
+
+function removePoint(id) {
+    measurements = measurements.filter(m => m.id !== id);
+    updateMeasurementsList();
+    
+    // Remove point from image
+    const point = document.querySelector(`.measurement-point[data-id="${id}"]`);
+    if (point) point.remove();
+    
+    const label = document.querySelector(`.point-label[data-id="${id}"]`);
+    if (label) label.remove();
+}
+
+function clearPoints() {
+    measurements = [];
+    currentId = 1;
+    
+    // Remove all points from image
+    const points = document.querySelectorAll('.measurement-point');
+    points.forEach(point => point.remove());
+    
+    updateMeasurementsList();
+}
+
+// Add event listener to the image container if we're on the parts management page
+document.addEventListener('DOMContentLoaded', function() {
+    const imageContainer = document.getElementById('imageContainer');
+    if (imageContainer) {
+        imageContainer.addEventListener('click', handleImageClick);
+    }
+    
+    // Add event listener to drawing canvas for the main page as well
+    const drawingCanvas = document.getElementById('drawingCanvas');
+    if (drawingCanvas) {
+        drawingCanvas.addEventListener('click', function(event) {
+            // Only handle clicks if we're on the main page (not parts management page)
+            if (!document.getElementById('PartsManagementPage')) {
+                handleCanvasClick(event);
+            }
+        });
+    }
+});

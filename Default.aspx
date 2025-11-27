@@ -65,6 +65,25 @@
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="Default.aspx">Teknik Ã‡izim Sistemi</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarNav">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="Default.aspx">Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="PartsManagement.aspx">Ãœretilen ParÃ§alar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <form id="form1" runat="server">
         <div class="container-fluid">
             <div class="row">
