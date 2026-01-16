@@ -1,0 +1,40 @@
+```
+# Flutter/Dart
+.dart_tool/
+.build/
+packages/
+*.iws
+*.sw?
+*~
+/.fuse_hidden*
+/3rdparty/
+*.pidb
+*.suo
+*.csproj.user
+*.csproj.user.backup
+*.userprefs
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+coverage/
+build/
+.dart_tool/
+.pub-cache/
+.pub/
+packages/
+lib/*.g.dart
+lib/*.freezed.dart
+test/**/*.mocks.dart
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Dependencies
+node_modules/
+```
