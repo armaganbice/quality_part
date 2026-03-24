@@ -1,146 +1,245 @@
-# FMEA Sistemi - ASP.NET Web Forms + Bootstrap 5
+# FMEA (Failure Mode and Effects Analysis) Sistemi
 
-## Proje Açıklaması
+## 📋 Genel Bakış
 
-Bu proje, **FMEA (Failure Mode and Effects Analysis - Hata Türleri ve Etkileri Analizi)** yönetimi için geliştirilmiş bir ASP.NET Web Forms uygulamasıdır. Modern ve responsive bir kullanıcı arayüzü için **Bootstrap 5** kullanılmıştır.
+Bu proje, ASP.NET Web Forms ve Bootstrap 5 kullanılarak geliştirilmiş tam özellikli bir FMEA yönetim sistemidir. Üretim süreçlerindeki potansiyel hataları analiz etmek, risk öncelik numaralarını (RPN) hesaplamak ve azaltıcı aksiyonları takip etmek için kullanılır.
 
-## Özellikler
+## ✨ Özellikler
 
-### Temel İşlevler
-- ✅ Yeni FMEA kaydı ekleme
-- ✅ Kayıtları listeleme (GridView ile)
-- ✅ Kayıt silme
-- ✅ Arama fonksiyonu
-- ✅ RPN (Risk Priority Number) otomatik hesaplama
-- ✅ Risk seviyesine göre renkli gösterim
-- ✅ İstatistik kartları (Toplam, Yüksek/Orta/Düşük Risk)
+### ✅ Temel Özellikler
+- **FMEA Kayıt Yönetimi**: Yeni kayıt ekleme, düzenleme, silme
+- **RPN Otomatik Hesaplama**: Şiddet × Oluşma × Tespit
+- **Risk Seviyesi Renklendirme**: 
+  - 🔴 Yüksek Risk (RPN ≥ 200)
+  - 🟡 Orta Risk (100 ≤ RPN < 200)
+  - 🟢 Düşük Risk (RPN < 100)
+- **Arama ve Filtreleme**: Proses adı, hata modu, sorumlu kişiye göre
+- **Sayfalama**: Büyük veri setleri için
 
-### FMEA Alanları
-- **Proses Adımı**: İşlem veya prosesin adı
-- **Hata Modu**: Potansiyel hata türü
-- **Hata Etkisi**: Hatanın sonuçları
-- **Hata Nedeni**: Hatanın kök nedeni
-- **Şiddet (S)**: 1-10 arası hata şiddeti
-- **Oluşma (O)**: 1-10 arası oluşma olasılığı
-- **Tespit (D)**: 1-10 arası tespit edilebilirlik
-- **RPN**: Risk Öncelik Numarası (S × O × D)
-- **Mevcut Kontroller**: Halihazırda bulunan kontrol mekanizmaları
-- **Önerilen Aksiyonlar**: İyileştirme önerileri
-- **Sorumlu Kişi**: Aksiyondan sorumlu personel
-- **Hedef Tarih**: Aksiyonun tamamlanması gereken tarih
-- **Durum**: Açık/Kapalı/Devam Ediyor
+### 🆕 Gelişmiş Özellikler (Üretim Ortamı İçin)
 
-### RPN Renk Kodlaması
-- 🔴 **Yüksek Risk (RPN ≥ 200)**: Kırmızı - Acil aksiyon gerekli
-- 🟡 **Orta Risk (100 ≤ RPN < 200)**: Sarı - Aksiyon planlanmalı
-- 🟢 **Düşük Risk (RPN < 100)**: Yeşil - Kabul edilebilir risk
+#### 1. Veritabanı Entegrasyonu
+- ✅ MS-SQL Server veritabanı
+- ✅ ADO.NET ile veri erişimi
+- ✅ Stored Procedure'lar
+- ✅ Transaction yönetimi
+- ✅ View'lar ile özet raporlar
 
-## Teknolojiler
+#### 2. Kullanıcı Yönetimi
+- ✅ Authentication (Oturum yönetimi)
+- ✅ Authorization (Yetkilendirme)
+- ✅ Rol bazlı erişim kontrolü (Admin, Manager, User, Viewer)
+- ✅ Şifre hash'leme (SHA256)
+- ✅ Login/Logout sayfaları
+- ✅ Erişim reddedildi sayfası
 
-- **Framework**: ASP.NET Web Forms (.NET Framework 4.8)
-- **Dil**: C#
-- **UI Framework**: Bootstrap 5.3.2
-- **Icons**: Bootstrap Icons
-- **Veri Saklama**: Demo amaçlı bellek (List<T>) - Gerçek uygulamada SQL Server kullanılabilir
+#### 3. Excel Export
+- ✅ EPPlus ile gerçek Excel export (.xlsx)
+- ✅ CSV export seçeneği
+- ✅ RPN değerlerine göre otomatik renklendirme
+- ✅ Formatlanmış başlık satırları
 
-## Kurulum
+#### 4. Raporlama
+- ✅ Pareto analizi (80/20 kuralı)
+- ✅ Trend grafikleri
+- ✅ Risk dağılım pastası
+- ✅ PDF rapor oluşturma (HTML tabanlı)
+- ✅ Dashboard istatistikleri
 
-### Gereksinimler
-- Visual Studio 2019 veya üzeri
-- .NET Framework 4.8
-- IIS Express veya IIS
+#### 5. Düzenleme İşlevi
+- ✅ Mevcut kayıtları güncelleme
+- ✅ Versiyon geçmişi takibi
+- ✅ Değişiklik logları (ActionHistory tablosu)
+- ✅ Kayıt kilitleme mekanizması (hazır altyapı)
 
-### Çalıştırma Adımları
+#### 6. Bildirimler
+- ✅ E-posta bildirim sistemi (SMTP)
+- ✅ Hedef tarihi yaklaşan aksiyonlar için hatırlatma
+- ✅ Yüksek riskli kayıtlar için yönetici uyarısı
+- ✅ Haftalık özet raporu
 
-1. Projeyi Visual Studio'da açın
-2. `FMEASystem.sln` dosyasına çift tıklayın
-3. `Ctrl+F5` ile çalıştırın veya `F5` ile debug modunda başlatın
-4. Tarayıcınızda otomatik olarak açılacaktır
-
-### Manuel Kurulum (IIS)
-
-1. Projeyi build edin (`Build > Build Solution`)
-2. IIS'de yeni bir web sitesi veya virtual directory oluşturun
-3. Build output'u hedef dizine kopyalayın
-4. Uygulamayı browse edin
-
-## Dosya Yapısı
+## 🏗️ Proje Yapısı
 
 ```
 FMEASystem/
-├── Default.aspx              # Ana sayfa (UI)
-├── Default.aspx.cs           # Code-behind (C# logic)
-├── Web.config                # Konfigürasyon dosyası
-├── FMEASystem.csproj         # Proje dosyası
+├── App_Data/                  # Veritabanı dosyaları
+├── Database/
+│   └── FMEADatabase.sql      # Veritabanı kurulum script'i
+├── Handlers/                  # HTTP Handler'lar
+├── Helpers/
+│   ├── AuthenticationHelper.cs    # Kimlik doğrulama
+│   ├── EmailNotificationHelper.cs # E-posta bildirimleri
+│   ├── ExcelExportHelper.cs       # Excel/CSV export
+│   └── ReportingHelper.cs         # Raporlama ve grafikler
 ├── Models/
-│   └── FMEAItem.cs          # FMEA veri modeli
-└── Properties/
-    └── AssemblyInfo.cs       # Assembly bilgileri
+│   ├── FMEAItem.cs           # FMEA kayıt modeli
+│   ├── FMEAEditHelper.cs     # Düzenleme yardımcı
+│   └── User.cs               # Kullanıcı modeli
+├── Properties/
+│   └── AssemblyInfo.cs
+├── Reports/                   # Rapor dosyaları
+├── AccessDenied.aspx         # Erişim reddedildi
+├── AccessDenied.aspx.cs
+├── Default.aspx              # Ana sayfa
+├── Default.aspx.cs
+├── Login.aspx                # Giriş sayfası
+├── Login.aspx.cs
+├── Logout.aspx               # Çıkış işlemi
+├── Logout.aspx.cs
+├── Reports.aspx              # Raporlar ve analizler
+├── Reports.aspx.cs
+├── Web.config                # Konfigürasyon
+└── README.md                 # Bu dosya
 ```
 
-## Kullanım
+## 🚀 Kurulum
 
-### Yeni Kayıt Ekleme
-1. Form alanlarını doldurun
-2. Şiddet, Oluşma ve Tespit değerlerini seçin (1-10)
-3. "Kaydet" butonuna tıklayın
-4. RPN otomatik olarak hesaplanır ve tabloya eklenir
+### 1. Veritabanı Kurulumu
+```sql
+-- SQL Server Management Studio'da çalıştırın
+Database/FMEADatabase.sql
+```
 
-### Kayıt Silme
-- Tablodaki her satırın sonundaki çöp kutusu ikonuna tıklayın
-- Onay mesajını kabul edin
+### 2. Connection String Ayarı
+Web.config dosyasındaki connection string'i kendi SQL Server bilgilerinizle güncelleyin:
+```xml
+<connectionStrings>
+  <add name="FMEAConnection" 
+       connectionString="Data Source=SERVER_NAME;Initial Catalog=FMEADatabase;Integrated Security=True;" />
+</connectionStrings>
+```
 
-### Arama Yapma
-- Arama kutusuna proses adı, hata modu veya sorumlu kişi bilgisini yazın
-- Otomatik olarak filtreleme yapılır
+### 3. NuGet Paketleri (İsteğe Bağlı)
+```powershell
+# EPPlus - Excel export için
+Install-Package EPPlus
 
-### İstatistikler
-- Dashboard'daki kartlar anlık istatistikleri gösterir
-- Toplam kayıt sayısı
-- Risk seviyelerine göre dağılım
+# iTextSharp - PDF export için (opsiyonel)
+Install-Package iTextSharp
+```
 
-## Geliştirme Önerileri
+### 4. SMTP Ayarları (E-posta Bildirimleri için)
+Web.config'de SMTP ayarlarını yapın:
+```xml
+<appSettings>
+  <add key="SMTPServer" value="smtp.gmail.com" />
+  <add key="SMTPPort" value="587" />
+  <add key="SenderEmail" value="fmea@firma.com" />
+  <add key="SenderPassword" value="your_password" />
+  <add key="SMTPEnableSSL" value="true" />
+</appSettings>
+```
 
-Gerçek bir üretim ortamı için eklenebilecek özellikler:
+### 5. Projeyi Çalıştırma
+1. Visual Studio'da projeyi açın
+2. F5 tuşuna basın veya Debug > Start Debugging
+3. Tarayıcıda otomatik olarak açılacaktır
 
-1. **Veritabanı Entegrasyonu**
-   - SQL Server veya başka bir veritabanı kullanımı
-   - Entity Framework veya ADO.NET ile veri erişimi
+## 👤 Demo Kullanıcılar
 
-2. **Kullanıcı Yönetimi**
-   - Authentication ve Authorization
-   - Rol bazlı erişim kontrolü
+| Kullanıcı Adı | Şifre | Rol |
+|--------------|-------|-----|
+| admin | admin123 | Admin |
+| ayse.demir | demo123 | Manager |
+| ahmet.yilmaz | demo123 | User |
 
-3. **Excel Export**
-   - EPPlus veya ClosedXML ile gerçek Excel export
-   - CSV export seçeneği
+## 📊 Veritabanı Tabloları
 
-4. **Raporlama**
-   - Pareto analizi
-   - Trend grafikleri
-   - PDF rapor oluşturma
+### Ana Tablolar
+- **FMEAItems**: FMEA kayıtları
+- **Users**: Kullanıcı bilgileri
+- **ActionHistory**: Değişiklik geçmişi
 
-5. **Düzenleme İşlevi**
-   - Mevcut kayıtları güncelleme
-   - Versiyon geçmişi
+### Görünümler (Views)
+- **vw_FMEARiskSummary**: Risk seviyesine göre özet
+- **vw_FMEAStatusSummary**: Duruma göre özet
+- **vw_ResponsiblePersonSummary**: Sorumlu kişi dağılımı
+- **vw_OverdueActions**: Geciken aksiyonlar
 
-6. **Bildirimler**
-   - Hedef tarihi yaklaşan aksiyonlar için e-posta bildirimi
-   - Dashboard bildirimleri
+### Stored Procedure'lar
+- **sp_AddFMEAItem**: Yeni kayıt ekle
+- **sp_UpdateFMEAItem**: Kayıt güncelle
+- **sp_DeleteFMEAItem**: Kayıt sil
+- **sp_SearchFMEAItems**: Kayıt ara
+- **sp_GetDashboardStatistics**: Dashboard istatistikleri
 
-## Lisans
+## 🔐 Güvenlik Özellikleri
 
-Bu proje eğitim ve demo amaçlıdır. Ticari kullanım için uygun şekilde uyarlanmalıdır.
+1. **Şifre Hash'leme**: SHA256 algoritması
+2. **Session Yönetimi**: 30 dakika timeout
+3. **Rol Bazlı Erişim**: Admin, Manager, User, Viewer
+4. **SQL Injection Koruması**: Parameterized queries
+5. **XSS Koruması**: Input validation
 
-## Katkıda Bulunma
+## 📈 Kullanım Senaryoları
 
-Geliştirmeler ve öneriler için pull request gönderebilirsiniz.
+### Yeni FMEA Kaydı Ekleme
+1. Ana sayfada form alanlarını doldurun
+2. Şiddet, Oluşma, Tespit değerlerini seçin (1-10)
+3. RPN otomatik hesaplanır
+4. "Kaydet" butonuna tıklayın
 
-## İletişim
+### Raporları Görüntüleme
+1. Navbar'dan "Raporlar" menüsüne tıklayın
+2. Pareto analizi, risk dağılımı grafiklerini görüntüleyin
+3. En kritik hata modlarını inceleyin
 
-Sorularınız için proje dokümantasyonunu inceleyebilirsiniz.
+### Excel/CSV Export
+1. Raporlar sayfasında "Dışa Aktar" menüsünü açın
+2. İstediğiniz formatı seçin (Excel, CSV, PDF)
+3. Dosya otomatik indirilecektir
+
+### E-posta Bildirimleri
+```csharp
+// Manuel tetikleme örneği
+EmailNotificationHelper.SendDueDateReminders();
+EmailNotificationHelper.SendHighRiskAlert(fmeaItemId);
+EmailNotificationHelper.SendWeeklySummaryReport();
+```
+
+## 🔧 Yapılandırma Seçenekleri
+
+### Session Timeout Süresi
+```xml
+<sessionState mode="InProc" timeout="30" />
+```
+
+### Forms Authentication
+```xml
+<authentication mode="Forms">
+  <forms loginUrl="~/Login.aspx" timeout="30" slidingExpiration="true" />
+</authentication>
+```
+
+## 📝 Gelecek Geliştirmeler
+
+- [ ] Entity Framework entegrasyonu
+- [ ] SignalR ile real-time bildirimler
+- [ ] Angular/React frontend
+- [ ] REST API endpoints
+- [ ] Docker containerization
+- [ ] Azure DevOps CI/CD pipeline
+- [ ] Multi-language support
+- [ ] Advanced filtering options
+- [ ] Bulk import/export
+- [ ] Mobile responsive improvements
+
+## 📄 Lisans
+
+Bu proje eğitim ve demonstrasyon amaçlıdır.
+
+## 👥 Katkıda Bulunma
+
+1. Projeyi fork edin
+2. Feature branch oluşturun (`git checkout -b feature/YeniOzellik`)
+3. Değişikliklerinizi commit edin (`git commit -am 'Yeni özellik eklendi'`)
+4. Branch'i push edin (`git push origin feature/YeniOzellik`)
+5. Pull Request oluşturun
+
+## 📞 İletişim
+
+Sorularınız için: fmea-support@firma.com
 
 ---
 
-**FMEA** - Failure Mode and Effects Analysis  
-**RPN** - Risk Priority Number (Risk Öncelik Numarası)
+**Not**: Bu sistem üretim ortamında kullanılmadan önce güvenlik testlerinden geçirilmeli ve şirket politikalarına göre özelleştirilmelidir.

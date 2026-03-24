@@ -53,9 +53,19 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DataVisualization" />
+    <!-- EPPlus Reference (NuGet'ten yüklenebilir: Install-Package EPPlus) -->
+    <!-- <Reference Include="EPPlus, Version=6.0.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1"> -->
+    <!--   <HintPath>packages\EPPlus.6.0.0\lib\net48\EPPlus.dll</HintPath> -->
+    <!-- </Reference> -->
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="Logout.aspx" />
+    <Content Include="Reports.aspx" />
+    <Content Include="AccessDenied.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -63,11 +73,37 @@
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports.aspx.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AccessDenied.aspx.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\FMEAItem.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\FMEAEditHelper.cs" />
+    <Compile Include="Helpers\AuthenticationHelper.cs" />
+    <Compile Include="Helpers\ExcelExportHelper.cs" />
+    <Compile Include="Helpers\ReportingHelper.cs" />
+    <Compile Include="Helpers\EmailNotificationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Handlers\" />
+    <Folder Include="Reports\" />
+    <Folder Include="App_Data\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
