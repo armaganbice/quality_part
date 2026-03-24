@@ -1,0 +1,60 @@
+```
+# Binaries
+*.exe
+*.dll
+*.pdb
+*.mdb
+*.exe.config
+*.dll.config
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio files
+*.sln
+*.csproj
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.cache
+*.VC.db
+*.VC.VC.opendb
+
+# Visual Studio Code files
+.vscode/
+
+# Web specific
+obj/
+publish/
+_App_Start/
+_BinDeployableAssemblies/
+*.nupkg
+
+# Log files
+*.log
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+desktop.ini
+
+# Testing
+TestResults/
+```
